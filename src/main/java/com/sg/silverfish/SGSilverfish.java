@@ -2,10 +2,14 @@ package com.sg.silverfish;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.mob.SilverfishEntity;
 import net.minecraft.entity.passive.BatEntity;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.Difficulty;
 
 import java.util.Random;
@@ -31,11 +35,16 @@ public class SGSilverfish implements ModInitializer {
 			if (!entity.getType().equals(EntityType.BAT)) {
 				return;
 			}
+			BatEntity bat = (BatEntity) entity;
+			NbtElement check = ((IEntityDataSaver)bat).getPersistentData().get("silverfish_spawn");
+			if(check != null){
+				return;
+			}
+			((IEntityDataSaver)bat).getPersistentData().putString("silverfish_spawn", "checked");
 			boolean willSpawn = r.nextInt(100) <= spawnRatio;
 			if (!willSpawn) {
 				return;
 			}
-			BatEntity bat = (BatEntity) entity;
 			if (bat.getPos().getY() >= 0) {
 				return;
 			}
