@@ -36,11 +36,11 @@ public class SGSilverfish implements ModInitializer {
 				return;
 			}
 			BatEntity bat = (BatEntity) entity;
-			NbtElement check = ((IEntityDataSaver)bat).getPersistentData().get("silverfish_spawn");
+			NbtElement check = ((IEntityDataSaver)bat).getSGSilverfishPersistentData().get("silverfish_spawn");
 			if(check != null){
 				return;
 			}
-			((IEntityDataSaver)bat).getPersistentData().putString("silverfish_spawn", "checked");
+			((IEntityDataSaver)bat).getSGSilverfishPersistentData().putString("silverfish_spawn", "checked");
 			boolean willSpawn = r.nextInt(100) <= spawnRatio;
 			if (!willSpawn) {
 				return;
